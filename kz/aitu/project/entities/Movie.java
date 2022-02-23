@@ -1,21 +1,24 @@
 package kz.aitu.project.entities;
 
+import java.sql.Array;
+import java.util.ArrayList;
+
 public class Movie {
     private int id;
     private String name;
-    private String genre;
-    private String country;
+    private String[] genre;
+    private String[] country;
     private int year;
-    private String director;
-    private String writers;
-    private String cast;
-    private int rating;
+    private String[] director;
+    private String[] writers;
+    private String[] cast;
+    private double rating;
 
     public Movie() {
 
     }
 
-    public Movie(String name, String genre, String country, int year, String director, String writers, String cast, int rating) {
+    public Movie(String name, String[] genre, String[] country, int year, String[] director, String[] writers, String[] cast) {
         setName(name);
         setGenre(genre);
         setCountry(country);
@@ -26,7 +29,8 @@ public class Movie {
         setRating(rating);
     }
 
-    public Movie(int id, String name, String genre, String country, int year, String director, String writers, String cast, int rating) {
+    public Movie(int id, String name, String[] genre, String[] country, int year, String[] director, String[] writers,
+                 String[] cast) {
         setId(id);
         setName(name);
         setGenre(genre);
@@ -54,19 +58,19 @@ public class Movie {
         return name;
     }
 
-    public void setGenre(String genre) {
+    public void setGenre(String[] genre) {
         this.genre = genre;
     }
 
-    public String getGenre() {
+    public String[] getGenre() {
         return genre;
     }
 
-    public void setCountry(String country) {
+    public void setCountry(String[] country) {
         this.country = country;
     }
 
-    public String getCountry() {
+    public String[] getCountry() {
         return country;
     }
 
@@ -78,36 +82,51 @@ public class Movie {
         return year;
     }
 
-    public void setDirector(String director) {
+    public void setDirector(String[] director) {
         this.director = director;
     }
 
-    public String getDirector() {
+    public String[] getDirector() {
         return director;
     }
 
-    public void setWriters(String writers) {
+    public void setWriters(String[] writers) {
         this.writers = writers;
     }
 
-    public String getWriters() {
+    public String[] getWriters() {
         return writers;
     }
 
-    public void setCast(String cast) {
+    public void setCast(String[] cast) {
         this.cast = cast;
     }
 
-    public String getCast() {
+    public String[] getCast() {
         return cast;
     }
 
-    public void setRating(int rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 
-    public int getRating() {
+    public double getRating() {
         return rating;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", genre=" + genre +
+                ", country=" + country +
+                ", year=" + year +
+                ", director=" + director +
+                ", writers=" + writers +
+                ", cast=" + cast +
+                ", rating=" + rating +
+                '}' + '\n';
     }
 }
 

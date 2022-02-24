@@ -2,6 +2,7 @@ package kz.aitu.project.entities;
 
 import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Movie {
     private int id;
@@ -130,12 +131,12 @@ public class Movie {
         return "Movie{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", genre=" + genre +
-                ", country=" + country +
+                ", genre=" + Arrays.toString(genre) +
+                ", country=" + Arrays.toString(country) +
                 ", year=" + year +
-                ", director=" + director +
-                ", writers=" + writers +
-                ", cast=" + cast +
+                ", director=" + Arrays.toString(director) +
+                ", writers=" + Arrays.toString(writers) +
+                ", cast=" + Arrays.toString(cast) +
                 ", rating=" + rating +
                 '}' + '\n';
     }

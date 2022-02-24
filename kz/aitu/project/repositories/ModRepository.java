@@ -175,6 +175,7 @@ public class ModRepository implements IModRepository {
                 PreparedStatement st = con.prepareStatement(sql);
 
                 st.setArray(1, arrayGenre);
+                st.setInt(2, id);
 
                 ResultSet rs = st.executeQuery();
             } else if (field=="country") {
@@ -184,6 +185,7 @@ public class ModRepository implements IModRepository {
                 PreparedStatement st = con.prepareStatement(sql);
 
                 st.setArray(1, arrayCountry);
+                st.setInt(2, id);
 
                 ResultSet rs = st.executeQuery();
             } else if (field=="director") {
@@ -193,6 +195,7 @@ public class ModRepository implements IModRepository {
                 PreparedStatement st = con.prepareStatement(sql);
 
                 st.setArray(1, arrayDirector);
+                st.setInt(2, id);
 
                 ResultSet rs = st.executeQuery();
             } else if (field=="writers") {
@@ -202,6 +205,7 @@ public class ModRepository implements IModRepository {
                 PreparedStatement st = con.prepareStatement(sql);
 
                 st.setArray(1, arrayWriters);
+                st.setInt(2, id);
 
                 ResultSet rs = st.executeQuery();
             } else if (field=="cast") {
@@ -211,6 +215,7 @@ public class ModRepository implements IModRepository {
                 PreparedStatement st = con.prepareStatement(sql);
 
                 st.setArray(1, arrayCast);
+                st.setInt(2, id);
 
                 ResultSet rs = st.executeQuery();
             }
@@ -238,6 +243,7 @@ public class ModRepository implements IModRepository {
             PreparedStatement st = con.prepareStatement(sql);
 
             st.setString(1, name);
+            st.setInt(2, id);
 
             ResultSet rs = st.executeQuery();
         } catch (SQLException throwables) {
@@ -263,6 +269,7 @@ public class ModRepository implements IModRepository {
             PreparedStatement st = con.prepareStatement(sql);
 
             st.setInt(1, year);
+            st.setInt(2, id);
 
             ResultSet rs = st.executeQuery();
         } catch (SQLException throwables) {
@@ -338,21 +345,21 @@ public class ModRepository implements IModRepository {
     }
 
     @Override
-    public boolean promoteDemote(int id, boolean moderator) {
+    public boolean promoteDemote(int id) {
         Connection con = null;
         List<User> users = getAllUsers();
         try {
-            if(users.get(id).isModerator() == false) {
-                con = db.getConnection();
-                String sql = "UPDATE users SET moderator=true WHERE id=?";
+            con = db.getConnection();
+            if (users.get(id-1).isModerator() == true) {
+                System.out.println(users.get(id-1).isModerator());
+                String sql = "UPDATE users SET moderator=false WHERE id=?";
                 PreparedStatement st = con.prepareStatement(sql);
 
                 st.setInt(1, id);
 
                 ResultSet rs = st.executeQuery();
             } else {
-                con = db.getConnection();
-                String sql = "UPDATE users SET moderator=false WHERE id=?";
+                String sql = "UPDATE users SET moderator=true WHERE id=?";
                 PreparedStatement st = con.prepareStatement(sql);
 
                 st.setInt(1, id);

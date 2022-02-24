@@ -109,4 +109,18 @@ public class User {
     public boolean isModerator() {
         return moderator;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", recovery_question='" + recovery_question + '\'' +
+                ", question_answer='" + question_answer + '\'' +
+                ", moderator=" + moderator +
+                '}' + '\n';
+    }
 }

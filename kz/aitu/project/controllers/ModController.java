@@ -84,4 +84,19 @@ public class ModController {
 
         return reviews.toString();
     }
+
+    public String promoteDemote(int id) {
+        return null;
+    }
+
+    public String deleteReview(int id) {
+        boolean deleted = repo.deleteReview(id);
+
+        if (deleted==true) {
+            return "Movie has been updated";
+        } else {
+            return "The process have failed";
+        }
+
+    }
 }

@@ -16,5 +16,5 @@ public interface IModRepository {
     boolean editMovieYear(int id, int year);
     List<Review> getAllReviews();
     boolean deleteReview(int id);
-    boolean promoteDemote(int id, boolean moderator);
+    boolean promoteDemote(int id);
 }

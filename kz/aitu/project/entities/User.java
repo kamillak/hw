@@ -8,6 +8,7 @@ public class User {
     private String surname;
     private String recovery_question;
     private String question_answer;
+    private boolean moderator;
 
     public User() {
 
@@ -22,7 +23,8 @@ public class User {
         setQuestion_answer(question_answer);
     }
 
-    public User(int id, String username, String password, String name, String surname, String recovery_question, String question_answer) {
+    public User(int id, String username, String password, String name, String surname, String recovery_question,
+                String question_answer) {
         setId(id);
         setUsername(username);
         setPassword(password);
@@ -30,6 +32,18 @@ public class User {
         setSurname(surname);
         setRecovery_question(recovery_question);
         setQuestion_answer(question_answer);
+    }
+
+    public User(int id, String username, String password, String name, String surname, String recovery_question,
+                String question_answer, boolean moderator) {
+        setId(id);
+        setUsername(username);
+        setPassword(password);
+        setName(name);
+        setSurname(surname);
+        setRecovery_question(recovery_question);
+        setQuestion_answer(question_answer);
+        moderator = false;
     }
 
     public void setId(int id) {
@@ -86,5 +100,13 @@ public class User {
 
     public String getQuestion_answer() {
         return question_answer;
+    }
+
+    public void setModerator(boolean moderator) {
+        this.moderator = moderator;
+    }
+
+    public boolean isModerator() {
+        return moderator;
     }
 }

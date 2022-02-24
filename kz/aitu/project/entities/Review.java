@@ -65,4 +65,15 @@ public class Review {
     public double getRating() {
         return rating;
     }
+
+    @Override
+    public String toString() {
+        return "Review{" +
+                "id=" + id +
+                ", movieid=" + movieid +
+                ", userid=" + userid +
+                ", review='" + review + '\'' +
+                ", rating=" + rating +
+                '}' + '\n';
+    }
 }

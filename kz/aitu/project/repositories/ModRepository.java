@@ -1,7 +1,9 @@
 package kz.aitu.project.repositories;
 
 import kz.aitu.project.data.interfaces.IDB;
-import kz.aitu.project.entities.*;
+import kz.aitu.project.entities.Movie;
+import kz.aitu.project.entities.User;
+import kz.aitu.project.entities.Review;
 import kz.aitu.project.repositories.interfaces.IModRepository;
 
 import java.sql.*;
@@ -11,7 +13,6 @@ import java.util.LinkedList;
 
 public class ModRepository implements IModRepository {
     private final IDB db;
-    Movie movie = new Movie();
 
     public ModRepository(IDB db) {
         this.db = db;
@@ -87,6 +88,42 @@ public class ModRepository implements IModRepository {
                 movies.add(movie);
             }
             return movies;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        Connection con = null;
+        try {
+            con = db.getConnection();
+            String sql = "SELECT * FROM users";
+            PreparedStatement st = con.prepareStatement(sql);
+
+            List<User> users = new LinkedList<>();
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                User user = new User(rs.getInt("id"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("name"),
+                        rs.getString("surname"),
+                        rs.getString("recovery_question"),
+                        rs.getString("question_answer"),
+                        rs.getBoolean("moderator"));
+                users.add(user);
+            }
+            return users;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -303,17 +340,22 @@ public class ModRepository implements IModRepository {
     @Override
     public boolean promoteDemote(int id, boolean moderator) {
         Connection con = null;
+        List<User> users = getAllUsers();
         try {
-            if (moderator == true) {
+            if(users.get(id).isModerator() == false) {
                 con = db.getConnection();
                 String sql = "UPDATE users SET moderator=true WHERE id=?";
                 PreparedStatement st = con.prepareStatement(sql);
+
+                st.setInt(1, id);
 
                 ResultSet rs = st.executeQuery();
             } else {
                 con = db.getConnection();
                 String sql = "UPDATE users SET moderator=false WHERE id=?";
                 PreparedStatement st = con.prepareStatement(sql);
+
+                st.setInt(1, id);
 
                 ResultSet rs = st.executeQuery();
             }

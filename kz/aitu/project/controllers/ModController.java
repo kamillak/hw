@@ -1,6 +1,8 @@
 package kz.aitu.project.controllers;
 
 import kz.aitu.project.entities.Movie;
+import kz.aitu.project.entities.Review;
+import kz.aitu.project.entities.User;
 import kz.aitu.project.repositories.interfaces.IModRepository;
 
 import java.util.List;
@@ -31,13 +33,55 @@ public class ModController {
         return movies.toString();
     }
 
+    public String getAllUsers() {
+        List<User> users = repo.getAllUsers();
+
+        return users.toString();
+    }
+
     public String removeMovie(int id) {
         boolean removed = repo.removeMovie(id);
 
         if (removed == true) {
             return "Movie has been removed";
         } else {
-            return "The process have been failed";
+            return "The process have failed";
         }
+    }
+
+    public String editMovie(int id, String field, String[] values) {
+        boolean edited = repo.editMovie(id, field, values);
+
+        if (edited==true) {
+            return "Movie has been updated";
+        } else {
+            return "The process have failed";
+        }
+    }
+
+    public String editMovieName(int id, String name) {
+        boolean edited = repo.editMovieName(id, name);
+
+        if (edited==true) {
+            return "Movie has been updated";
+        } else {
+            return "The process have failed";
+        }
+    }
+
+    public String editMovieYear(int id, int year) {
+        boolean edited = repo.editMovieYear(id, year);
+
+        if (edited==true) {
+            return "Movie has been updated";
+        } else {
+            return "The process have failed";
+        }
+    }
+
+    public String getAllReviews() {
+        List<Review> reviews = repo.getAllReviews();
+
+        return reviews.toString();
     }
 }

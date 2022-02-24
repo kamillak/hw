@@ -18,7 +18,18 @@ public class Movie {
 
     }
 
-    public Movie(String name, String[] genre, String[] country, int year, String[] director, String[] writers, String[] cast) {
+    public Movie(String name, String[] genre, String[] country, int year, String[] director, String[] writers, String[] cast){
+        setName(name);
+        setGenre(genre);
+        setCountry(country);
+        setYear(year);
+        setDirector(director);
+        setWriters(writers);
+        setCast(cast);
+    }
+
+    public Movie(String name, String[] genre, String[] country, int year, String[] director, String[] writers, String[] cast,
+                 double rating) {
         setName(name);
         setGenre(genre);
         setCountry(country);
@@ -30,7 +41,7 @@ public class Movie {
     }
 
     public Movie(int id, String name, String[] genre, String[] country, int year, String[] director, String[] writers,
-                 String[] cast) {
+                 String[] cast, double rating) {
         setId(id);
         setName(name);
         setGenre(genre);
@@ -127,47 +138,5 @@ public class Movie {
                 ", cast=" + cast +
                 ", rating=" + rating +
                 '}' + '\n';
-    }
-}
-
-public class Account
-{
-    protected int id;
-    public String name;
-    private String film;
-
-    public Account(int id,String name, String Film)
-    {
-        this.id = id;
-        this.name = name;
-        this.film = film;
-
-    }
-
-    public Account(){
-        this.id = 0;
-        this.name = null;
-        this.film = null;
-    }
-
-    public void setId(int id){
-        this.id = id;
-    }
-
-    public int getId(){
-        return this.id;
-    }
-
-    public void setName(String name){
-        this.name = name;
-    }
-    public String getName(){
-        return this.name;
-    }
-    public void setFilm(String film){
-        this.film = film;
-    }
-    public String getFilm(){
-        return this.film;
     }
 }

@@ -7,10 +7,12 @@ import java.util.List;
 
 public interface IModRepository {
     boolean addMovie(Movie movie);
-    //    List<Movie> getAllMovies();
+    List<Movie> getAllMovies();
     boolean removeMovie(int id);
-//    boolean editMovie(int id);
-//    List<Review> getAllReviews();
-//    boolean deleteReview(int id);
-//    boolean promoteToMod(int id);
+    boolean editMovie(int id, String field, String[] values);
+    boolean editMovieName(int id, String name);
+    boolean editMovieYear(int id, int year);
+    List<Review> getAllReviews();
+    boolean deleteReview(int id);
+    boolean promoteDemote(int id, boolean moderator);
 }

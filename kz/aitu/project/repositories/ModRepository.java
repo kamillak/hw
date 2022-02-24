@@ -11,6 +11,7 @@ import java.util.LinkedList;
 
 public class ModRepository implements IModRepository {
     private final IDB db;
+    Movie movie = new Movie();
 
     public ModRepository(IDB db) {
         this.db = db;
@@ -64,15 +65,25 @@ public class ModRepository implements IModRepository {
             ResultSet rs = st.executeQuery(sql);
             List<Movie> movies = new LinkedList<>();
             while (rs.next()) {
+                Array arrayGenre = rs.getArray("genre");
+                String[] genre = (String[])arrayGenre.getArray();
+                Array arrayCountry = rs.getArray("country");
+                String[] country = (String[])arrayCountry.getArray();
+                Array arrayDirector = rs.getArray("director");
+                String[] director = (String[])arrayDirector.getArray();
+                Array arrayWriters = rs.getArray("writers");
+                String[] writers = (String[])arrayWriters.getArray();
+                Array arrayCast = rs.getArray("actors");
+                String[] cast = (String[])arrayCast.getArray();
                 Movie movie = new Movie(rs.getInt("id"),
                         rs.getString("name"),
-                        rs.getArray("genre"),
-                        rs.getArray("country"),
+                        genre,
+                        country,
                         rs.getInt("year"),
-                        rs.getArray("director"),
-                        rs.getArray("writers"),
-                        rs.getArray("actors"),
-                        rs.getInt("rating"));
+                        director,
+                        writers,
+                        cast,
+                        rs.getDouble("rating"));
                 movies.add(movie);
             }
             return movies;
@@ -115,14 +126,208 @@ public class ModRepository implements IModRepository {
         return false;
     }
 
-//    @Override
-//    public boolean editMovie(int id) {
-//        Connection con = null;
-//        try {
-//            con = db.getConnection();
-//            String sql = "UPDATE movies SET name=? AND "
-//        }
-//    }
+    @Override
+    public boolean editMovie(int id, String field, String[] values) {
+        Connection con = null;
+        try {
+            con = db.getConnection();
+            if (field=="genre") {
+                Array arrayGenre = con.createArrayOf("text", values);
+
+                String sql = "UPDATE movies SET genre=? WHERE id=?";
+                PreparedStatement st = con.prepareStatement(sql);
+
+                st.setArray(1, arrayGenre);
+
+                ResultSet rs = st.executeQuery();
+            } else if (field=="country") {
+                Array arrayCountry = con.createArrayOf("text", values);
+
+                String sql = "UPDATE movies SET country=? WHERE id=?";
+                PreparedStatement st = con.prepareStatement(sql);
+
+                st.setArray(1, arrayCountry);
+
+                ResultSet rs = st.executeQuery();
+            } else if (field=="director") {
+                Array arrayDirector = con.createArrayOf("text", values);
+
+                String sql = "UPDATE movies SET director=? WHERE id=?";
+                PreparedStatement st = con.prepareStatement(sql);
+
+                st.setArray(1, arrayDirector);
+
+                ResultSet rs = st.executeQuery();
+            } else if (field=="writers") {
+                Array arrayWriters = con.createArrayOf("text", values);
+
+                String sql = "UPDATE movies SET writers=? WHERE id=?";
+                PreparedStatement st = con.prepareStatement(sql);
+
+                st.setArray(1, arrayWriters);
+
+                ResultSet rs = st.executeQuery();
+            } else if (field=="cast") {
+                Array arrayCast = con.createArrayOf("text", values);
+
+                String sql = "UPDATE movies SET actors=? WHERE id=?";
+                PreparedStatement st = con.prepareStatement(sql);
+
+                st.setArray(1, arrayCast);
+
+                ResultSet rs = st.executeQuery();
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return false;
+    }
 
 
+    @Override
+    public boolean editMovieName(int id, String name) {
+        Connection con = null;
+        try {
+            con = db.getConnection();
+            String sql = "UPDATE movies SET name=? WHERE id=?";
+            PreparedStatement st = con.prepareStatement(sql);
+
+            st.setString(1, name);
+
+            ResultSet rs = st.executeQuery();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean editMovieYear(int id, int year) {
+        Connection con = null;
+        try {
+            con = db.getConnection();
+            String sql = "UPDATE movies SET year=? WHERE id=?";
+            PreparedStatement st = con.prepareStatement(sql);
+
+            st.setInt(1, year);
+
+            ResultSet rs = st.executeQuery();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public List<Review> getAllReviews() {
+        Connection con = null;
+        try {
+            con = db.getConnection();
+            String sql = "SELECT * FROM reviews";
+            PreparedStatement st = con.prepareStatement(sql);
+
+            ResultSet rs = st.executeQuery();
+            List<Review> reviews = new LinkedList<>();
+            while (rs.next()) {
+                Review review = new Review(rs.getInt("id"),
+                        rs.getInt("movieid"),
+                        rs.getInt("userid"),
+                        rs.getString("review"),
+                        rs.getDouble("rating"));
+                reviews.add(review);
+            }
+            return reviews;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public boolean deleteReview(int id) {
+        Connection con = null;
+        try {
+            con = db.getConnection();
+            String sql = "DELETE FROM reviews WHERE id=?";
+            PreparedStatement st = con.prepareStatement(sql);
+
+            st.setInt(1, id);
+
+            ResultSet rs = st.executeQuery();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean promoteDemote(int id, boolean moderator) {
+        Connection con = null;
+        try {
+            if (moderator == true) {
+                con = db.getConnection();
+                String sql = "UPDATE users SET moderator=true WHERE id=?";
+                PreparedStatement st = con.prepareStatement(sql);
+
+                ResultSet rs = st.executeQuery();
+            } else {
+                con = db.getConnection();
+                String sql = "UPDATE users SET moderator=false WHERE id=?";
+                PreparedStatement st = con.prepareStatement(sql);
+
+                ResultSet rs = st.executeQuery();
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return false;
+    }
 }

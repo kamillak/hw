@@ -5,20 +5,20 @@ public class Review {
     private int movieid;
     private int userid;
     private String review;
-    private int rating;
+    private double rating;
 
     public Review() {
 
     }
 
-    public Review(int movieid, int userid, String review, int rating) {
+    public Review(int movieid, int userid, String review, double rating) {
         setMovieid(movieid);
         setUserid(userid);
         setReview(review);
         setRating(rating);
     }
 
-    public Review(int id, int movieid, int userid, String review, int rating) {
+    public Review(int id, int movieid, int userid, String review, double rating) {
         setId(id);
         setMovieid(movieid);
         setUserid(userid);
@@ -58,11 +58,11 @@ public class Review {
         return review;
     }
 
-    public void setRating(int rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 
-    public int getRating() {
+    public double getRating() {
         return rating;
     }
 }

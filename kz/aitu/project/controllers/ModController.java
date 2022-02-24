@@ -25,11 +25,11 @@ public class ModController {
         }
     }
 
-//    public String getAllMovies() {
-//        List<Movie> movies = repo.getAllMovies();
-//
-//        return movies.toString();
-//    }
+    public String getAllMovies() {
+        List<Movie> movies = repo.getAllMovies();
+
+        return movies.toString();
+    }
 
     public String removeMovie(int id) {
         boolean removed = repo.removeMovie(id);

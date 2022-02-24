@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IUserRepository {
     List<Movie> getAllMovies();
-
+    
     List<Movie> orderMovies(String type);
 
     List<String> browseMovie(String type);

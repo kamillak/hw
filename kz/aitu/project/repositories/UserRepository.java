@@ -27,32 +27,20 @@ public class UserRepository implements IUserRepository {
             ResultSet rs = st.executeQuery(sql);
             List<Movie> movies = new LinkedList<>();
             while (rs.next()) {
-                Array arrayGenre = rs.getArray("genre");
-                String[] genre = (String[])arrayGenre.getArray();
-                Array arrayCountry = rs.getArray("country");
-                String[] country = (String[])arrayCountry.getArray();
-                Array arrayDirector = rs.getArray("director");
-                String[] director = (String[])arrayDirector.getArray();
-                Array arrayWriters = rs.getArray("writers");
-                String[] writers = (String[])arrayWriters.getArray();
-                Array arrayCast = rs.getArray("actors");
-                String[] cast = (String[])arrayCast.getArray();
                 Movie movie = new Movie(rs.getInt("id"),
                         rs.getString("name"),
-                        genre,
-                        country,
+                        rs.getArray("genre"),
+                        rs.getArray("country"),
                         rs.getInt("year"),
-                        director,
-                        writers,
-                        cast,
-                        rs.getDouble("rating"));
+                        rs.getArray("director"),
+                        rs.getArray("writers"),
+                        rs.getArray("actors"),
+                        rs.getInt("rating"));
                 movies.add(movie);
             }
             return movies;
-        } catch (SQLException throwables) {
+        } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         } finally {
             try {
                 con.close();
@@ -74,25 +62,15 @@ public class UserRepository implements IUserRepository {
             ResultSet rs = st.executeQuery();
             List<Movie> movies = new LinkedList<>();
             while (rs.next()) {
-                Array arrayGenre = rs.getArray("genre");
-                String[] genre = (String[])arrayGenre.getArray();
-                Array arrayCountry = rs.getArray("country");
-                String[] country = (String[])arrayCountry.getArray();
-                Array arrayDirector = rs.getArray("director");
-                String[] director = (String[])arrayDirector.getArray();
-                Array arrayWriters = rs.getArray("writers");
-                String[] writers = (String[])arrayWriters.getArray();
-                Array arrayCast = rs.getArray("actors");
-                String[] cast = (String[])arrayCast.getArray();
                 Movie movie = new Movie(rs.getInt("id"),
                         rs.getString("name"),
-                        genre,
-                        country,
+                        rs.getArray("genre"),
+                        rs.getArray("country"),
                         rs.getInt("year"),
-                        director,
-                        writers,
-                        cast,
-                        rs.getDouble("rating"));
+                        rs.getArray("director"),
+                        rs.getArray("writers"),
+                        rs.getArray("actors"),
+                        rs.getInt("rating"));
                 movies.add(movie);
             }
             return movies;
@@ -113,13 +91,14 @@ public class UserRepository implements IUserRepository {
         Connection con = null;
         try {
             con = db.getConnection();
-            String sql = "INSERT INTO reviews(movieid, userid, review, rating) VALUES(?, ?, ?, ?)";
+            String sql = "INSERT INTO reviews(id, movieid, userid, review, rating) VALUES(?, ?, ?, ?, ?)";
             PreparedStatement st = con.prepareStatement(sql);
 
-            st.setInt(1, review.getMovieid());
-            st.setInt(2, review.getUserid());
-            st.setString(3, review.getReview());
-            st.setDouble(4, review.getRating());
+            st.setInt(1, review.getId());
+            st.setInt(2, review.getMovieid());
+            st.setInt(3, review.getUserid());
+            st.setString(4, review.getReview());
+            st.setInt(5, review.getRating());
 
             boolean executed = st.execute();
             return executed;

@@ -36,7 +36,7 @@ public class UserController {
         }
     }
 
-    public String getAllMovies() {
+        public String getAllMovies() {
         List<Movie> movies = repo.getAllMovies();
 
         return movies.toString();
